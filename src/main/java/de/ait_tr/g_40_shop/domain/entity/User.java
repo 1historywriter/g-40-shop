@@ -59,6 +59,18 @@ public class User implements UserDetails {
         return Objects.hash(id, username, password, roles);
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String toString() {
         return String.format("User: id - %d, username - %s, role - %s",
