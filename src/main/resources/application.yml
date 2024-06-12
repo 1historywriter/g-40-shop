@@ -21,4 +21,4 @@ key:
     file:
       name: logs/log.log
     level:
-      root: info
+      root: error
