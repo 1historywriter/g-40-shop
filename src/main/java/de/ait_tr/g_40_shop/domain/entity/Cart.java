@@ -1,11 +1,10 @@
 package de.ait_tr.g_40_shop.domain.entity;
 
 import jakarta.persistence.*;
-
 import java.util.List;
 import java.util.Objects;
 
-//@Entity
+@Entity
 @Table(name = "cart")
 public class Cart {
 
@@ -14,8 +13,11 @@ public class Cart {
     @Column(name = "id")
     private Long id;
 
+    @OneToOne(mappedBy = "cart")
     private Customer customer;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "cart_id")
     private List<Product> products;
 
     // TODO домашнее задание - функционал корзины

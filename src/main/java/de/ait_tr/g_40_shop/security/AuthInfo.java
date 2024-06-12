@@ -5,7 +5,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 public class AuthInfo implements Authentication {
@@ -19,10 +18,9 @@ public class AuthInfo implements Authentication {
         this.roles = roles;
     }
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return roles;
     }
 
     @Override
@@ -37,21 +35,21 @@ public class AuthInfo implements Authentication {
 
     @Override
     public Object getPrincipal() {
-        return null;
+        return username;
     }
 
     @Override
     public boolean isAuthenticated() {
-        return false;
+        return authenticated;
     }
 
     @Override
     public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
-
+        this.authenticated = isAuthenticated;
     }
 
     @Override
     public String getName() {
-        return "";
+        return username;
     }
 }

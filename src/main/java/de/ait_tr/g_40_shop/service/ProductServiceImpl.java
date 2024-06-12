@@ -2,6 +2,8 @@ package de.ait_tr.g_40_shop.service;
 
 import de.ait_tr.g_40_shop.domain.dto.ProductDto;
 import de.ait_tr.g_40_shop.domain.entity.Product;
+import de.ait_tr.g_40_shop.exception_handling.exception.FourthTestException;
+import de.ait_tr.g_40_shop.exception_handling.exception.ThirdTestException;
 import de.ait_tr.g_40_shop.repository.ProductRepository;
 import de.ait_tr.g_40_shop.service.interfaces.ProductService;
 import de.ait_tr.g_40_shop.service.mapping.ProductMappingService;
@@ -18,6 +20,7 @@ public class ProductServiceImpl implements ProductService {
     private Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
 
+
     private final ProductRepository repository;
     private final ProductMappingService mappingService;
 
@@ -29,7 +32,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDto save(ProductDto dto) {
         Product entity = mappingService.mapDtoToEntity(dto);
-        repository.save(entity);
+        try {
+            repository.save(entity);
+        } catch (Exception e) {
+            throw new FourthTestException(e.getMessage());
+        }
         return mappingService.mapEntityToDto(entity);
     }
 
@@ -38,7 +45,7 @@ public class ProductServiceImpl implements ProductService {
         return repository.findAll()
                 .stream()
                 .filter(Product::isActive)
-//                .map(x -> mappingService.mapEntityToDto(x))
+                // .map(x -> mappingService.mapEntityToDto(x))
                 .map(mappingService::mapEntityToDto)
                 .toList();
 
@@ -53,15 +60,14 @@ public class ProductServiceImpl implements ProductService {
 //
 //        return products;
     }
-
+    // Demo
 //    @Override
 //    public ProductDto getById(Long id) {
 //
-
-    // Demonstration of Logging
-//        logger.info("Method getById called with parameter {}", id);
-//        logger.warn("Method getById called with parameter {}", id);
-//        logger.error("Method getById called with parameter {}", id);
+//        logger.info( "Method getById called with parameter {}", id);
+//        logger.warn( "Method getById called with parameter {}", id);
+//        logger.error( "Method getById called with parameter {}", id);
+//
 //
 //        Product product = repository.findById(id).orElse(null);
 //
@@ -71,18 +77,18 @@ public class ProductServiceImpl implements ProductService {
 //
 //        return mappingService.mapEntityToDto(product);
 //    }
-
-
     @Override
-   public ProductDto getById(Long id) {
- Product product = repository.findById(id).orElse(null);
+    public ProductDto getById(Long id) {
 
-   if (product == null || !product.isActive()) {
-         return null;
-     }
 
-     return mappingService.mapEntityToDto(product);
-  }
+        Product product = repository.findById(id).orElse(null);
+
+        if (product == null || !product.isActive()) {
+            throw new ThirdTestException(String.format("Product with id %d not found", id));
+        }
+
+        return mappingService.mapEntityToDto(product);
+    }
 
     @Override
     public ProductDto update(ProductDto product) {

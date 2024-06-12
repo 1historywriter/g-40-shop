@@ -1,9 +1,11 @@
 package de.ait_tr.g_40_shop.domain.dto;
 
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
 public class ProductDto {
+
 
     private Long id;
     private String title;
@@ -45,7 +47,6 @@ public class ProductDto {
     public int hashCode() {
         return Objects.hash(id, title, price);
     }
-
     @Override
     public String toString() {
         return String.format("Product DTO: id - %d, title - %s, price - %s",

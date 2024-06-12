@@ -12,7 +12,7 @@ public interface ProductService {
     ProductDto getById(Long id);
     ProductDto update(ProductDto product);
     void deleteById(Long id);
-    void deleteByTitle(String id);
+    void deleteByTitle(String title);
     void restoreById(Long id);
     long getActiveProductsQuantity();
     BigDecimal getActiveProductsTotalPrice();

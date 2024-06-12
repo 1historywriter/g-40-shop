@@ -36,6 +36,18 @@ public class User implements UserDetails {
         return roles;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String getPassword() {
         return password;
@@ -57,18 +69,6 @@ public class User implements UserDetails {
     @Override
     public int hashCode() {
         return Objects.hash(id, username, password, roles);
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
     }
 
     @Override

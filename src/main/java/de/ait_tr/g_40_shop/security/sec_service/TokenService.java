@@ -20,10 +20,9 @@ import java.util.*;
 @Service
 public class TokenService {
 
-    private final RoleRepository roleRepository;
     private SecretKey accessKey;
     private SecretKey refreshKey;
-    private RoleRepository repository;
+    private RoleRepository roleRepository;
 
     public TokenService(
             @Value("${key.access}") String accessSecretPhrase,
@@ -51,15 +50,13 @@ public class TokenService {
 
     public String generateRefreshToken(User user) {
         LocalDateTime currentDate = LocalDateTime.now();
-        Instant expiration = currentDate.plusDays(7).atZone(ZoneId.systemDefault()).toInstant();
+        Instant expiration = currentDate.plusDays(30).atZone(ZoneId.systemDefault()).toInstant();
         Date expirationDate = Date.from(expiration);
 
         return Jwts.builder()
                 .subject(user.getUsername())
                 .expiration(expirationDate)
-                .signWith(accessKey)
-                .claim("roles", user.getAuthorities())
-                .claim("name", user.getUsername())
+                .signWith(refreshKey)
                 .compact();
     }
 
