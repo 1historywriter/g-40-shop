@@ -1,12 +1,9 @@
 package de.ait_tr.g_40_shop.service.mapping;
 
-
 import de.ait_tr.g_40_shop.domain.dto.ProductDto;
 import de.ait_tr.g_40_shop.domain.entity.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.springframework.stereotype.Service;
-
 
 @Mapper(componentModel = "spring")
 public interface ProductMappingService {
@@ -19,7 +16,6 @@ public interface ProductMappingService {
 
 //    public Product mapDtoToEntity(ProductDto dto) {
 //        Product entity = new Product();
-//        entity.setId(dto.getId());
 //        entity.setTitle(dto.getTitle());
 //        entity.setPrice(dto.getPrice());
 //        entity.setActive(true);

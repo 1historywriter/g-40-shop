@@ -5,6 +5,8 @@ import de.ait_tr.g_40_shop.domain.entity.Product;
 import de.ait_tr.g_40_shop.repository.ProductRepository;
 import de.ait_tr.g_40_shop.service.interfaces.ProductService;
 import de.ait_tr.g_40_shop.service.mapping.ProductMappingService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -12,6 +14,9 @@ import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+
+    private Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
+
 
     private final ProductRepository repository;
     private final ProductMappingService mappingService;
@@ -23,9 +28,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto save(ProductDto dto) {
-       Product entity = mappingService.mapDtoToEntity(dto);
-       repository.save(entity);
-       return mappingService.mapEntityToDto(entity);
+        Product entity = mappingService.mapDtoToEntity(dto);
+        repository.save(entity);
+        return mappingService.mapEntityToDto(entity);
     }
 
     @Override
@@ -33,6 +38,7 @@ public class ProductServiceImpl implements ProductService {
         return repository.findAll()
                 .stream()
                 .filter(Product::isActive)
+//                .map(x -> mappingService.mapEntityToDto(x))
                 .map(mappingService::mapEntityToDto)
                 .toList();
 
@@ -48,16 +54,35 @@ public class ProductServiceImpl implements ProductService {
 //        return products;
     }
 
+//    @Override
+//    public ProductDto getById(Long id) {
+//
+
+    // Demonstration of Logging
+//        logger.info("Method getById called with parameter {}", id);
+//        logger.warn("Method getById called with parameter {}", id);
+//        logger.error("Method getById called with parameter {}", id);
+//
+//        Product product = repository.findById(id).orElse(null);
+//
+//        if (product == null || !product.isActive()) {
+//            return null;
+//        }
+//
+//        return mappingService.mapEntityToDto(product);
+//    }
+
+
     @Override
-    public ProductDto getById(Long id) {
-        Product product = repository.findById(id).orElse(null);
+   public ProductDto getById(Long id) {
+ Product product = repository.findById(id).orElse(null);
 
-        if (product == null || !product.isActive()) {
-            return null;
-        }
+   if (product == null || !product.isActive()) {
+         return null;
+     }
 
-        return mappingService.mapEntityToDto(product);
-    }
+     return mappingService.mapEntityToDto(product);
+  }
 
     @Override
     public ProductDto update(ProductDto product) {
