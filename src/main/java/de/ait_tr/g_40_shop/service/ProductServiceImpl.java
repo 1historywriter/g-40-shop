@@ -3,10 +3,12 @@ package de.ait_tr.g_40_shop.service;
 import de.ait_tr.g_40_shop.domain.dto.ProductDto;
 import de.ait_tr.g_40_shop.domain.entity.Product;
 import de.ait_tr.g_40_shop.exception_handling.exception.FourthTestException;
+import de.ait_tr.g_40_shop.exception_handling.exception.ProductNoFoundException;
 import de.ait_tr.g_40_shop.exception_handling.exception.ThirdTestException;
 import de.ait_tr.g_40_shop.repository.ProductRepository;
 import de.ait_tr.g_40_shop.service.interfaces.ProductService;
 import de.ait_tr.g_40_shop.service.mapping.ProductMappingService;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -18,8 +20,6 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     private Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
-
-
 
     private final ProductRepository repository;
     private final ProductMappingService mappingService;
@@ -124,4 +124,15 @@ public class ProductServiceImpl implements ProductService {
     public BigDecimal getActiveProductsAveragePrice() {
         return null;
     }
-}
+
+    @Override
+    public void attachImage(String imageUrl, String productTitle) {
+
+        @Override
+        @Transactional
+        public void attachImage(String imageUrl, String productTitle){
+            Product product = repository.findByTitle(productTitle).orElseThrow(
+                    () -> new ProductNoFoundException(productTitle)
+            );
+        }
+    }
